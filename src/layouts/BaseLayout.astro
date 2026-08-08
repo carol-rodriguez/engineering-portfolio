@@ -10,12 +10,12 @@ interface Props {
 const { title, description, active } = Astro.props;
 
 const NAV = [
-  { href: "/", key: "index", label: "About" },
-  { href: "/projects", key: "projects", label: "Engineering" },
-  { href: "/research", key: "research", label: "Research" },
-  { href: "/experience", key: "experience", label: "Leadership" },
-  { href: "/resume", key: "resume", label: "Resume" },
-  { href: "/contact", key: "contact", label: "Contact" },
+  { href: "/engineering-portfolio/", key: "index", label: "About" },
+  { href: "/engineering-portfolio/projects/", key: "projects", label: "Engineering" },
+  { href: "/engineering-portfolio/research/", key: "research", label: "Research" },
+  { href: "/engineering-portfolio/experience/", key: "experience", label: "Leadership" },
+  { href: "/engineering-portfolio/resume/", key: "resume", label: "Resume" },
+  { href: "/engineering-portfolio/contact/", key: "contact", label: "Contact" },
 ] as const;
 
 const sheetNumber = NAV.findIndex((n) => n.key === active) + 1;
@@ -65,9 +65,8 @@ const total = NAV.length;
     <div class="tbf-inner">
       <span>© <span id="year"></span> Carol S. Rodriguez Esquivel · Drawn to build things that work.</span>
       <span>
-        <a href="mailto:carolrodriguezcoll@gmail.com">Email</a>
-        <a href="https://github.com/your-username" target="_blank" rel="noopener">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/carol-rodriguez-/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="mailto:carolrodriguezcoll">Email</a>
+        <a href="https://www.linkedin.com/in/carol-rodriguez-" target="_blank" rel="noopener">LinkedIn ↗</a>
       </span>
     </div>
   </footer>

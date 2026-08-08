@@ -38,7 +38,7 @@ const allProjects = (await getCollection("projects")).sort((a, b) => a.data.orde
       <div class="grid">
         {allProjects.map((item) => (
           <ItemCard
-            href={`/projects/${item.slug}`}
+            href={`/engineering-portfolio/projects/${item.slug}/`}
             meta={`${item.data.org ?? "Project"} · ${item.data.dateStart}${item.data.dateEnd ? " — " + item.data.dateEnd : ""}`}
             title={item.data.title}
             summary={item.data.summary}

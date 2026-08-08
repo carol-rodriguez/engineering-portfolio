@@ -34,7 +34,7 @@ const publications = all.filter((r) => r.data.kind === "publication");
       <div class="grid">
         {studies.map((item) => (
           <ItemCard
-            href={`/research/${item.slug}`}
+            href={`/engineering-portfolio/research/${item.slug}/`}
             meta={`${item.data.org ?? "Research"} · ${item.data.dateStart}${item.data.dateEnd ? " — " + item.data.dateEnd : ""}`}
             title={item.data.title}
             summary={item.data.summary}

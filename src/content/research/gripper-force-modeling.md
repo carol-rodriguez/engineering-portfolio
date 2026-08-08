@@ -7,7 +7,7 @@ category: "research"
 summary: "Investigating reconfigurable origami structures through design, simulation, fabrication, and mechanical testing."
 tags: ["Origami Engineering", "Simulation", "Experimental Testing", "CAD"]
 links:
-  - { label: "Research Project", url: "#" }
+  - { label: "Media", url: "https://www.youtube.com/watch?v=st76D2HfAnI" }
 order: 3
 ---
 

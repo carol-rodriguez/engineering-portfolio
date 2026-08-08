@@ -6,8 +6,6 @@ org: "Hybrid Soft Robotics Lab"
 category: "research"
 summary: "Designed an origami-inspired soft robotic structure using CAD modeling and finite element analysis."
 tags: ["ANSYS", "SolidWorks", "Soft Robotics", "FEA"]
-links:
-  - { label: "Research Summary", url: "#" }
 order: 1
 ---
 
