@@ -1,0 +1,73 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DimDivider from "../components/DimDivider.astro";
+import CVEntry from "../components/CVEntry.astro";
+
+const projectCount = (await getCollection("projects")).length;
+const researchCount = (await getCollection("research")).length;
+---
+
+<BaseLayout
+  title="Resume"
+  description="Resume of Carol Rodriguez, mechanical engineering student."
+  active="resume"
+>
+  <section class="sheet corner-marks" style="padding-top: 64px; padding-bottom: 24px;">
+    <div class="label hero-eyebrow">Resume</div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;">
+      <h1 style="font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--paper);">Carol S. Rodriguez</h1>
+      <a class="btn btn-primary" href="/assets/your-name-cv.pdf">Download PDF ↓</a>
+    </div>
+    <p class="lede" style="max-width: 65ch; margin-top: 10px;">
+      carolrodriguezcoll@gmail.com·
+      <a href="www.linkedin.com/in/carol-rodriguez-" style="color: var(--cyan);">www.linkedin.com/in/carol-rodriguez-</a>
+    </p>
+  </section>
+
+  <section class="sheet">
+    <div class="cv-block">
+      <DimDivider label="Education" index="01" />
+      <CVEntry when="[Aug Year] — [May Year, expected]" title="B.S. in Mechanical Engineering" org="[University Name], [City]">
+        <li>GPA: [X.XX / 4.0]</li>
+        <li>Relevant coursework: Statics &amp; Dynamics, Thermodynamics, Fluid Mechanics, Machine Design, Manufacturing Processes</li>
+        <li>[Dean's List / Scholarship / Honors — if applicable]</li>
+      </CVEntry>
+    </div>
+
+    <div class="cv-block">
+      <DimDivider label="Summary" index="02" />
+      <p>[2–3 line summary tying together your experience, projects, and research — the elevator-pitch version of your CV.]</p>
+      <p style="font-size: 0.9rem;">
+        See <a href="/experience" style="color: var(--cyan); text-decoration: none;">full work experience →</a>
+        and <a href="/research" style="color: var(--cyan); text-decoration: none;">research →</a>
+      </p>
+    </div>
+
+    <div class="cv-block">
+      <DimDivider label="Skills" index="03" />
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3>CAD / CAE</h3>
+          <ul><li>SolidWorks</li><li>Fusion 360</li><li>ANSYS</li><li>AutoCAD</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Analysis &amp; code</h3>
+          <ul><li>MATLAB</li><li>Python</li><li>GD&amp;T</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Manufacturing</h3>
+          <ul><li>CNC Machining</li><li>3D Printing</li><li>Welding</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-block">
+      <DimDivider label="Certifications & Languages" index="04" />
+      <CVEntry when="[Year]" title="[Certification Name]" org="[Issuing Organization]" />
+      <p style="margin-top: 6px; color: var(--muted); font-size: 0.9rem;">
+        Languages: [English — Fluent], [Spanish — Native], [Other]
+      </p>
+    </div>
+  </section>
+</BaseLayout>

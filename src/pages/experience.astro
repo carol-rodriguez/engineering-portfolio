@@ -1,0 +1,56 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DimDivider from "../components/DimDivider.astro";
+import CVEntry from "../components/CVEntry.astro";
+
+const all = (await getCollection("experience")).sort((a, b) => a.data.order - b.data.order);
+const jobs = all.filter((e) => e.data.kind === "job");
+const leadership = all.filter((e) => e.data.kind === "leadership");
+
+const when = (d: { dateStart: string; dateEnd?: string }) =>
+  `${d.dateStart}${d.dateEnd ? " — " + d.dateEnd : ""}`;
+---
+
+<BaseLayout
+  title="Experience"
+  description="Work experience and leadership roles of [Your Name]."
+  active="experience"
+>
+  <section class="sheet corner-marks" style="padding-top: 64px;">
+    <div class="label hero-eyebrow">Experience</div>
+    <h1 style="font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--paper); margin-bottom: 14px;">
+      Work &amp; leadership experience
+    </h1>
+    <p class="lede" style="max-width: 60ch;">
+      Internships, co-ops, and leadership roles on student teams — in
+      reverse chronological order.
+    </p>
+  </section>
+
+  <section class="sheet">
+    <DimDivider label="Internships & jobs" index="01" />
+    {jobs.length === 0 ? (
+      <p class="empty-note">Add a Markdown file to src/content/experience/ with kind: "job".</p>
+    ) : (
+      jobs.map((item) => (
+        <CVEntry when={when(item.data)} title={item.data.title} org={item.data.org}>
+          {item.data.bullets.map((b) => <li>{b}</li>)}
+        </CVEntry>
+      ))
+    )}
+  </section>
+
+  <section class="sheet">
+    <DimDivider label="Student teams & leadership" index="02" />
+    {leadership.length === 0 ? (
+      <p class="empty-note">Add a Markdown file to src/content/experience/ with kind: "leadership".</p>
+    ) : (
+      leadership.map((item) => (
+        <CVEntry when={when(item.data)} title={item.data.title} org={item.data.org}>
+          {item.data.bullets.map((b) => <li>{b}</li>)}
+        </CVEntry>
+      ))
+    )}
+  </section>
+</BaseLayout>

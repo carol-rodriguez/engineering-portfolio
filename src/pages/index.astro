@@ -1,0 +1,95 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DimDivider from "../components/DimDivider.astro";
+import ItemCard from "../components/ItemCard.astro";
+
+const projects = (await getCollection("projects")).filter((p) => p.data.featured);
+const research = (await getCollection("research")).filter((r) => r.data.featured);
+const experience = (await getCollection("experience")).filter((e) => e.data.featured);
+---
+
+<BaseLayout
+  title="About"
+  description="Portfolio of Carol S. Rodriguez, a mechanical engineering student."
+  active="index"
+>
+  <section class="hero sheet corner-marks">
+    <div class="hero-eyebrow label">B.S. Mechanical Engineering · Tecnologico de Monterrey · Class of 2027 </div>
+    <h1>Carol S. Rodriguez Esquivel<br /><span class="hl">Mechanical Engineering Student</span></h1>
+    <p class="role">[Aeronautics · Aerospace · Design · Research ]</p>
+    <p class="lede">
+      I design and analyze mechanical systems with a focus on aerospace engineering, combining simulation, experimentation, and engineering fundamentals to solve complex problems. My interests span aerodynamics, fluid mechanics, thermodynamics, and the development of technologies for future aerospace applications.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/projects">View Projects</a>
+      <a class="btn btn-ghost" href="/assets/your-name-cv.pdf">Download CV ↓</a>
+      <a class="btn btn-ghost" href="/contact">Get in Touch</a>
+    </div>
+
+    <div class="hero-meta">
+      <div><span class="k">University</span><span class="v">Tecnologico de Monterrey</span></div>
+      <div><span class="k">Expected Grad.</span><span class="v">June 2027</span></div>
+      <div><span class="k">GPA</span><span class="v">4.0 / 4.0</span></div>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <DimDivider label="Highlights"/>
+    <div class="grid">
+      {projects.map((item) => (
+        <ItemCard
+          href={`/projects/${item.slug}`}
+          meta={`Project · ${item.data.dateStart}${item.data.dateEnd ? " — " + item.data.dateEnd : ""}`}
+          title={item.data.title}
+          summary={item.data.summary}
+          tags={item.data.tags}
+        />
+      ))}
+      {research.map((item) => (
+        <ItemCard
+          href={`/research/${item.slug}`}
+          meta={`Research · ${item.data.dateStart}${item.data.dateEnd ? " — " + item.data.dateEnd : ""}`}
+          title={item.data.title}
+          summary={item.data.summary}
+          tags={item.data.tags}
+        />
+      ))}
+      {experience.map((item) => (
+        <ItemCard
+          href="/experience"
+          meta={`Experience · ${item.data.dateStart}${item.data.dateEnd ? " — " + item.data.dateEnd : ""}`}
+          title={item.data.title}
+          summary={item.data.org}
+          tags={[]}
+        />
+      ))}
+    </div>
+    <p style="margin-top: 10px;">
+      <em style="color: var(--muted); font-size: 0.85rem;">
+      </em>
+    </p>
+  </section>
+
+  <section class="sheet">
+    <DimDivider label="SKILLS" />
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>CAD / CAE</h3>
+        <ul><li>SolidWorks</li><li>Autodesk Fusion 360</li><li>ANSYS</li><li>AutoCAD</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Analysis &amp; code</h3>
+        <ul><li>MATLAB</li><li>Python</li><li>Excel / VBA</li><li>GD&amp;T</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Manufacturing</h3>
+        <ul><li>CNC Machining</li><li>3D Printing (FDM/SLA)</li><li>Welding</li><li>Sheet Metal</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Core coursework</h3>
+        <ul><li>Statics &amp; Dynamics</li><li>Thermodynamics</li><li>Fluid Mechanics</li><li>Materials Science</li></ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

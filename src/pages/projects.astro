@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ItemCard from "../components/ItemCard.astro";
+
+const allProjects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Projects"
+  description="Engineering design and build projects by [Your Name]."
+  active="projects"
+>
+  <section class="sheet corner-marks" style="padding-top: 64px;">
+    <div class="label hero-eyebrow">Projects</div>
+    <h1 style="font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--paper); margin-bottom: 14px;">
+      Engineering projects
+    </h1>
+    <p class="lede" style="max-width: 60ch;">
+      Design, build, and manufacturing work — class projects, competition
+      teams, and personal builds. For lab-based or faculty-advised work,
+      see the <a href="/research" style="color: var(--cyan);">Research</a> page instead.
+    </p>
+  </section>
+
+  <section class="sheet">
+    <div class="filters" role="group" aria-label="Filter projects by category">
+      <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter-btn" data-filter="design">Design</button>
+      <button class="filter-btn" data-filter="manufacturing">Manufacturing</button>
+      <button class="filter-btn" data-filter="analysis">Analysis</button>
+      <button class="filter-btn" data-filter="coursework">Coursework</button>
+    </div>
+
+    {allProjects.length === 0 ? (
+      <p class="empty-note">No projects yet — add a Markdown file to src/content/projects/ to get started.</p>
+    ) : (
+      <div class="grid">
+        {allProjects.map((item) => (
+          <ItemCard
+            href={`/projects/${item.slug}`}
+            meta={`${item.data.org ?? "Project"} · ${item.data.dateStart}${item.data.dateEnd ? " — " + item.data.dateEnd : ""}`}
+            title={item.data.title}
+            summary={item.data.summary}
+            tags={item.data.tags}
+            category={item.data.category}
+            externalLinks={item.data.links}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+
+  <script>
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll("[data-category]");
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
+        const category = btn.dataset.filter;
+        cards.forEach((card) => {
+          const match = category === "all" || card.dataset.category === category;
+          card.style.display = match ? "" : "none";
+        });
+      });
+    });
+  </script>
+</BaseLayout>

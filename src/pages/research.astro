@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ItemCard from "../components/ItemCard.astro";
+import DimDivider from "../components/DimDivider.astro";
+import CVEntry from "../components/CVEntry.astro";
+
+const all = (await getCollection("research")).sort((a, b) => a.data.order - b.data.order);
+const studies = all.filter((r) => r.data.kind === "study");
+const publications = all.filter((r) => r.data.kind === "publication");
+---
+
+<BaseLayout
+  title="Research"
+  description="Research experience and publications by [Your Name]."
+  active="research"
+>
+  <section class="sheet corner-marks" style="padding-top: 64px;">
+    <div class="label hero-eyebrow">Research</div>
+    <h1 style="font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--paper); margin-bottom: 14px;">
+      Research work
+    </h1>
+    <p class="lede" style="max-width: 60ch;">
+      Faculty-advised research, lab work, and any publications or
+      conference submissions. For hands-on design/build projects, see
+      <a href="/projects" style="color: var(--cyan);">Projects</a> instead.
+    </p>
+  </section>
+
+  <section class="sheet">
+    {studies.length === 0 ? (
+      <p class="empty-note">No research items yet — add a Markdown file to src/content/research/.</p>
+    ) : (
+      <div class="grid">
+        {studies.map((item) => (
+          <ItemCard
+            href={`/research/${item.slug}`}
+            meta={`${item.data.org ?? "Research"} · ${item.data.dateStart}${item.data.dateEnd ? " — " + item.data.dateEnd : ""}`}
+            title={item.data.title}
+            summary={item.data.summary}
+            tags={item.data.tags}
+            externalLinks={item.data.links}
+          />
+        ))}
+      </div>
+    )}
+
+    {publications.length > 0 && (
+      <>
+        <div style="margin-top: 48px;">
+          <DimDivider label="Publications & presentations" />
+        </div>
+        {publications.map((item) => (
+          <CVEntry when={item.data.dateStart} title={item.data.title} org={item.data.org ?? ""}>
+            {item.data.links.map((l) => (
+              <li><a href={l.url} target="_blank" rel="noopener" style="color: var(--cyan); text-decoration: none;">{l.label} ↗</a></li>
+            ))}
+          </CVEntry>
+        ))}
+      </>
+    )}
+  </section>
+</BaseLayout>

@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const items = await getCollection("research");
+  return items.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content } = await item.render();
+const { title, dateStart, dateEnd, org, summary, tags, links } = item.data;
+---
+
+<BaseLayout title={title} description={summary} active="research">
+  <section class="sheet corner-marks" style="padding-top: 64px;">
+    <a href="/research" class="back-link">← Back to Research</a>
+    <div class="item-header">
+      <span class="label">{org ?? "Research"} · {dateStart}{dateEnd ? ` — ${dateEnd}` : ""}</span>
+      <h1>{title}</h1>
+      <div class="tags">
+        {tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+      {links.length > 0 && (
+        <div class="card-links" style="margin-top: 14px;">
+          {links.map((l) => (
+            <a href={l.url} target="_blank" rel="noopener">{l.label} ↗</a>
+          ))}
+        </div>
+      )}
+    </div>
+    <div class="item-body">
+      <Content />
+    </div>
+  </section>
+</BaseLayout>

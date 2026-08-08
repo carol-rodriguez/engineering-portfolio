@@ -1,0 +1,18 @@
+---
+interface Props {
+  when: string; // e.g. "Jun 2025 — Aug 2025"
+  title: string;
+  org: string;
+  href?: string;
+}
+const { when, title, org, href } = Astro.props;
+---
+
+<div class="cv-entry">
+  <span class="when">{when}</span>
+  <h3>{href ? <a href={href} style="color: var(--paper); text-decoration: none;">{title}</a> : title}</h3>
+  <div class="org">{org}</div>
+  <ul>
+    <slot />
+  </ul>
+</div>

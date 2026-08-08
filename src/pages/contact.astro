@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DimDivider from "../components/DimDivider.astro";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with [Your Name], mechanical engineering student."
+  active="contact"
+>
+  <section class="sheet corner-marks" style="padding-top: 64px;">
+    <div class="label hero-eyebrow">Contact</div>
+    <h1 style="font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--paper); margin-bottom: 14px;">Let's talk</h1>
+    <p class="lede" style="max-width: 60ch;">
+      Open to internships, co-ops, and research opportunities in
+      [design / manufacturing / robotics — edit to fit you]. The fastest
+      way to reach me is email.
+    </p>
+  </section>
+
+  <section class="sheet">
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-row">
+          <span class="k">Email</span>
+          <a class="v" href="mailto:your.email@example.com">your.email@example.com</a>
+          <button class="copy-btn" data-copy="your.email@example.com">Copy</button>
+        </div>
+        <div class="contact-row">
+          <span class="k">Phone</span>
+          <span class="v">[Your phone number]</span>
+        </div>
+        <div class="contact-row">
+          <span class="k">LinkedIn</span>
+          <a class="v" href="https://www.linkedin.com/in/your-profile/" target="_blank" rel="noopener">linkedin.com/in/your-profile</a>
+        </div>
+        <div class="contact-row">
+          <span class="k">GitHub</span>
+          <a class="v" href="https://github.com/your-username" target="_blank" rel="noopener">github.com/your-username</a>
+        </div>
+        <div class="contact-row">
+          <span class="k">Location</span>
+          <span class="v">[City, Country]</span>
+        </div>
+      </div>
+
+      <div>
+        <DimDivider label="Status" />
+        <p style="color: var(--paper); font-size: 0.95rem;">
+          [Currently seeking summer 2027 internships in mechanical design.
+          Available to start [Month Year]. Edit this note to say what
+          you're looking for right now.]
+        </p>
+        <a class="btn btn-primary" href="/assets/your-name-cv.pdf" style="margin-top: 18px;">Download CV ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const text = btn.getAttribute("data-copy");
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = btn.textContent;
+          btn.textContent = "Copied";
+          setTimeout(() => {
+            if (btn) btn.textContent = original;
+          }, 1500);
+        } catch (e) {
+          // Clipboard API unavailable — user can select the email text manually.
+        }
+      });
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,13 @@
+---
+interface Props {
+  label: string;
+  index?: string; // e.g. "01" — omit for unnumbered dividers
+}
+const { label, index } = Astro.props;
+---
+
+<div class="dim-divider">
+  <span class="tick"></span><span class="rule"></span>
+  <span class="tag">{index ? <><span class="idx">{index} ·</span> {label}</> : label}</span>
+  <span class="rule"></span><span class="tick"></span>
+</div>
